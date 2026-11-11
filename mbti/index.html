@@ -1,110 +1,400 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>관상 MBTI - 재미로 보는 나의 예상 MBTI</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>나는야 문장왕!</title>
 <style>
-/* 귀여운 둥근 글씨체: 인터넷 연결 시 Jua 폰트를 불러오고, 안 되면 기기 기본 글꼴을 사용해요. */
-@import url('https://fonts.googleapis.com/css2?family=Jua&family=Nunito:wght@400;600;700;800;900&display=swap');
-:root{--pink:#ff6fae;--deep:#e94c91;--pale:#fff0f7;--ink:#573448;--line:#ffd0e4}
-*{box-sizing:border-box}
-body{margin:0;min-height:100vh;background:linear-gradient(145deg,#fff5fa,#ffe4f0);font-family:"Jua","Nunito","Malgun Gothic",sans-serif;color:var(--ink);padding:22px;letter-spacing:.2px}
-main{width:min(100%,560px);margin:0 auto}
-.panel{background:#fff;border:2px solid var(--line);border-radius:28px;padding:24px;box-shadow:0 14px 35px #d95b9220}
-h1{text-align:center;font-size:clamp(30px,7.5vw,43px);margin:4px 0 8px;color:var(--deep);letter-spacing:1px;text-shadow:2px 3px 0 #ffe0ee}
-.sub{text-align:center;margin:0 0 22px;color:#91677d}
-.upload{display:grid;place-items:center;min-height:230px;border:2px dashed #f5a6ca;border-radius:22px;background:#fff8fb;overflow:hidden;position:relative}
-.upload img{max-width:100%;max-height:300px;object-fit:contain;display:none}
-.upload .placeholder{text-align:center;padding:20px}
-.upload .emoji{font-size:56px}
-input[type=file]{display:none}
-label,.btn{min-height:54px;border:0;border-radius:18px;padding:13px 18px;font-family:inherit;font-size:19px;font-weight:800;letter-spacing:.3px;cursor:pointer;display:flex;align-items:center;justify-content:center}
-label{background:#ffe0ee;color:#a63d70;margin:16px 0 10px}
-.btn{width:100%;background:var(--pink);color:#fff;box-shadow:0 5px 0 #df4c91;margin-top:10px}
-.btn:active{transform:translateY(3px);box-shadow:0 2px 0 #df4c91}
-.btn.secondary{background:#fff;color:var(--deep);border:2px solid var(--line);box-shadow:none}
-.note{text-align:center;font-size:13px;color:#98788a;line-height:1.6;margin:16px 0 0}
-.result{display:none;margin-top:22px;padding:22px;border-radius:22px;background:linear-gradient(140deg,#fff0f7,#fff9fc);border:2px solid var(--line);text-align:center}
-.result .eyebrow{font-size:14px;color:#a56b86;font-weight:700}
-.result h2{font-size:58px;letter-spacing:6px;color:var(--deep);margin:8px 0;text-shadow:2px 3px 0 #ffe0ee}
-.result h3{margin:4px 0 12px;font-size:23px;letter-spacing:.3px}
-.result p{line-height:1.7;margin:8px 0}
-.tag{display:inline-block;background:#fff;border:1px solid var(--line);padding:7px 12px;border-radius:99px;margin:4px;font-size:13px}
-.actions{display:flex;gap:10px;margin-top:12px}
-.actions .btn{flex:1}
-footer{text-align:center;font-size:12px;color:#9b7b8d;margin:16px 0}
-@media(max-width:400px){body{padding:12px}.panel{padding:17px;border-radius:22px}.actions{flex-direction:column}}
-@media print{body{background:#fff;padding:0}.panel{box-shadow:none}.upload,label,.actions,.note{display:none!important}.result{display:block!important}}
+* { box-sizing:border-box; }
+body {
+  margin:0;
+  font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;
+  background:#eaf7e9;
+  color:#294735;
+}
+button { font:inherit; cursor:pointer; }
+.app {
+  max-width:1000px;
+  min-height:100vh;
+  margin:auto;
+  padding:24px;
+}
+header { text-align:center; margin-bottom:20px; }
+h1 { font-size:clamp(32px,5vw,48px); margin:8px 0; }
+.subtitle { color:#64816c; font-size:17px; }
+.panel {
+  background:white;
+  border-radius:25px;
+  padding:clamp(20px,4vw,38px);
+  box-shadow:0 8px 24px #315d3515;
+  margin:18px 0;
+}
+.center { text-align:center; }
+.hidden { display:none !important; }
+.levels {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+  margin:24px 0;
+}
+.level {
+  border:3px solid #dcebdc;
+  border-radius:20px;
+  background:#f8fcf7;
+  padding:20px 10px;
+  color:#294735;
+}
+.level:hover { border-color:#69ad72; transform:translateY(-2px); }
+.level .emoji { font-size:40px; display:block; }
+.level strong { display:block; font-size:21px; margin:8px 0; }
+.level small { color:#68816e; }
+.primary {
+  background:#4e9d5b;
+  color:white;
+  border:0;
+  border-radius:15px;
+  padding:14px 28px;
+  font-weight:bold;
+  font-size:18px;
+}
+.primary:hover { background:#367e43; }
+.secondary {
+  background:#edf5ed;
+  color:#365d3c;
+  border:0;
+  border-radius:13px;
+  padding:12px 20px;
+}
+.word-box {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:18px;
+  margin:30px 0;
+  flex-wrap:wrap;
+}
+.word {
+  background:#e5f5df;
+  border:3px solid #a6d39c;
+  color:#286438;
+  padding:20px 28px;
+  border-radius:20px;
+  font-size:clamp(25px,4vw,38px);
+  font-weight:900;
+}
+.plus { font-size:30px; color:#80a884; }
+textarea {
+  width:100%;
+  min-height:130px;
+  resize:vertical;
+  border:2px solid #d5e6d5;
+  border-radius:16px;
+  padding:18px;
+  font:inherit;
+  font-size:19px;
+  outline:none;
+}
+textarea:focus { border-color:#65a76c; }
+.stats {
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  flex-wrap:wrap;
+  color:#64816c;
+  font-weight:bold;
+}
+.feedback {
+  padding:16px;
+  border-radius:14px;
+  background:#f1f8ed;
+  margin:16px 0;
+  line-height:1.7;
+}
+.progress {
+  height:10px;
+  background:#e8f0e6;
+  border-radius:20px;
+  overflow:hidden;
+  margin:16px 0;
+}
+.progress > div {
+  height:100%;
+  background:#71b879;
+  transition:width .3s;
+}
+.big-score { font-size:56px; font-weight:900; color:#4e9d5b; }
+.history { color:#708875; font-size:14px; }
+@media(max-width:600px) {
+  .app { padding:12px; }
+  .levels { grid-template-columns:1fr; }
+  .level { display:flex; align-items:center; gap:14px; text-align:left; }
+  .level .emoji { font-size:32px; }
+  .level strong { margin:0; }
+}
 </style>
 </head>
 <body>
-<main>
-<section class="panel">
-<h1>🎀 관상 MBTI 🎀</h1>
-<p class="sub">사진 한 장으로 바로 보는 오늘의 재미 MBTI!</p>
-<div class="upload" id="dropArea">
-  <div class="placeholder" id="placeholder"><div class="emoji">📸</div><strong>내 사진을 올려주세요!</strong><p>사진은 이 기기 안에서만 처리돼요.</p></div>
-  <img id="photo" alt="내가 선택한 사진 미리보기">
-</div>
-<label for="file">🖼️ 사진 선택하기</label>
-<input id="file" type="file" accept="image/*">
-<button class="btn" id="analyze" disabled>✨ 관상 MBTI 분석하기</button>
-<div class="result" id="result" aria-live="polite">
-  <div class="eyebrow">두근두근 오늘의 예상 MBTI</div>
-  <h2 id="type">ENFP</h2>
-  <h3 id="title">반짝반짝 아이디어 요정</h3>
-  <p id="desc"></p>
-  <div id="tags"></div>
-  <p class="note">※ 사진을 바탕으로 만든 재미용 가상 결과예요. 실제 성격이나 MBTI를 알아내는 검사는 아니에요.</p>
-  <div class="actions">
-    <button class="btn secondary" id="again">다른 사진으로 다시 하기</button>
-    <button class="btn" id="print">결과 인쇄하기</button>
+<div class="app">
+<header>
+  <div style="font-size:38px">✏️ 📖 🌳</div>
+  <h1>나는야 문장왕!</h1>
+  <div class="subtitle">두 단어를 연결해 멋진 문장을 만들어 보세요!</div>
+</header>
+
+<section id="home" class="panel center">
+  <h2>🎮 문장 만들기 도전!</h2>
+  <p>두 단어를 모두 넣어 재미있는 문장을 만들어 보세요.</p>
+  <p><b>난이도가 높아질수록 두 단어의 연관성이 낮아져요!</b></p>
+  <div class="levels">
+    <button class="level" onclick="startGame('easy')">
+      <span class="emoji">🌱</span>
+      <span><strong>새싹</strong><small>서로 잘 어울리는 단어</small></span>
+    </button>
+    <button class="level" onclick="startGame('normal')">
+      <span class="emoji">🌳</span>
+      <span><strong>나무</strong><small>조금 떨어진 단어</small></span>
+    </button>
+    <button class="level" onclick="startGame('hard')">
+      <span class="emoji">🦉</span>
+      <span><strong>숲속</strong><small>서로 다른 단어</small></span>
+    </button>
   </div>
-</div>
-<p class="note">질문 없이 바로 결과가 나와요. 사진은 서버로 전송되지 않아요.</p>
+  <div class="history" id="history"></div>
 </section>
-<footer>관상 MBTI · 재미로만 즐겨주세요 💗</footer>
-</main>
+
+<section id="game" class="panel hidden">
+  <div class="stats">
+    <span id="levelLabel">🌱 새싹</span>
+    <span id="roundLabel">1 / 5</span>
+    <span id="scoreLabel">점수 0점</span>
+  </div>
+  <div class="progress"><div id="progressBar" style="width:0%"></div></div>
+  <div class="center">
+    <h2>두 단어를 모두 사용해 보세요!</h2>
+    <div class="word-box">
+      <div class="word" id="wordA">우산</div>
+      <div class="plus">+</div>
+      <div class="word" id="wordB">비</div>
+    </div>
+    <p>두 단어가 자연스럽게 들어가도록 문장을 만들어 보세요.</p>
+  </div>
+  <textarea id="answer" placeholder="여기에 나만의 문장을 써 보세요!"></textarea>
+  <div id="feedback" class="feedback hidden" aria-live="polite"></div>
+  <div class="center" style="margin-top:18px">
+    <button class="primary" id="checkBtn" onclick="checkAnswer()">정답 확인하기</button>
+    <button class="primary hidden" id="nextBtn" onclick="nextQuestion()">다음 문제 →</button>
+  </div>
+</section>
+
+<section id="result" class="panel center hidden">
+  <div style="font-size:55px">🏆</div>
+  <h2>문장왕 도전 완료!</h2>
+  <div class="big-score" id="finalScore">0점</div>
+  <p id="resultMessage"></p>
+  <p id="resultDetail"></p>
+  <button class="primary" onclick="goHome()">처음으로</button>
+</section>
+</div>
+
 <script>
-const $=id=>document.getElementById(id);
-const file=$('file'),photo=$('photo'),placeholder=$('placeholder'),analyze=$('analyze'),result=$('result');
-const profiles=[
-['ENFP','반짝반짝 아이디어 요정','호기심이 반짝! 새로운 재미를 찾아 나서는 상상력 대장 타입이에요.','호기심 뿜뿜','상상력 풍부','분위기 메이커'],
-['ISTJ','차근차근 믿음직 대장','차분하고 야무진 느낌! 작은 일도 꼼꼼하게 해낼 것 같은 타입이에요.','꼼꼼함','약속 잘 지킴','든든한 친구'],
-['ISFP','포근포근 감성 아티스트','부드럽고 따뜻한 분위기! 좋아하는 것을 자기만의 방식으로 즐기는 타입이에요.','감성 충만','다정다감','나만의 취향'],
-['ENTJ','당당당당 리더 대장','자신감 넘치는 분위기! 목표를 정하면 멋지게 이끌어 갈 것 같은 타입이에요.','추진력','결단력','리더 기질'],
-['INFP','몽글몽글 상상 탐험가','마음속에 멋진 이야기가 가득! 나만의 세계를 소중히 여기는 타입이에요.','풍부한 상상','따뜻한 마음','나만의 세계'],
-['ESTP','에너지 팡팡 모험가','활기찬 느낌! 생각만 하기보다 직접 해보며 배우는 타입이에요.','도전 정신','순발력','행동파'],
-['INFJ','조용한 반짝 통찰가','차분하지만 속은 깊은 느낌! 주변을 세심하게 살피는 타입이에요.','세심함','깊은 생각','공감 능력'],
-['ESFJ','다정다감 행복 배달부','밝고 친근한 느낌! 친구들과 함께할 때 즐거움이 커지는 타입이에요.','친화력','배려심','팀워크']
+const QUESTION_BANK = [
+  // 새싹: 서로 잘 어울리는 단어
+  {a:'우산',b:'비',level:'easy',example:'비가 와서 우산을 쓰고 학교에 갔어요.'},
+  {a:'강아지',b:'공원',level:'easy',example:'강아지와 공원에서 신나게 뛰어놀았어요.'},
+  {a:'연필',b:'공책',level:'easy',example:'연필로 공책에 오늘 배운 내용을 썼어요.'},
+  {a:'바다',b:'모래',level:'easy',example:'바다 옆 모래밭에서 모래성을 만들었어요.'},
+  {a:'친구',b:'생일',level:'easy',example:'친구의 생일을 축하해 주었어요.'},
+  {a:'나무',b:'그늘',level:'easy',example:'더운 날 나무 그늘에서 잠시 쉬었어요.'},
+
+  // 나무: 조금 떨어져 있는 단어
+  {a:'도서관',b:'조용히',level:'normal',example:'도서관에서는 다른 사람을 위해 조용히 해야 해요.'},
+  {a:'약속',b:'시계',level:'normal',example:'친구와 한 약속을 지키려고 시계를 보며 시간을 확인했어요.'},
+  {a:'환경',b:'장바구니',level:'normal',example:'환경을 생각해서 물건을 살 때 장바구니를 사용해요.'},
+  {a:'발명',b:'불편',level:'normal',example:'생활 속 불편을 해결하려고 새로운 물건을 발명했어요.'},
+  {a:'운동회',b:'협동',level:'normal',example:'운동회에서 친구들과 협동하며 이어달리기를 했어요.'},
+  {a:'식물',b:'관찰',level:'normal',example:'식물이 자라는 모습을 매일 관찰했어요.'},
+
+  // 숲속: 서로 연관성이 적은 단어
+  {a:'우주',b:'양말',level:'hard',example:'우주 비행사는 알록달록한 양말을 신고 출발했어요.'},
+  {a:'달팽이',b:'시계',level:'hard',example:'달팽이가 시계를 보며 천천히 정원으로 갔어요.'},
+  {a:'기차',b:'수박',level:'hard',example:'기차 안에서 친구와 수박을 나누어 먹었어요.'},
+  {a:'구름',b:'연필',level:'hard',example:'나는 연필로 하늘에 떠 있는 구름을 그렸어요.'},
+  {a:'고래',b:'운동화',level:'hard',example:'고래 그림이 그려진 운동화를 신고 바닷가를 걸었어요.'},
+  {a:'화산',b:'아이스크림',level:'hard',example:'화산 모양의 아이스크림을 만들어 보았어요.'}
 ];
-let imageData='';
-file.addEventListener('change',()=>{
- const f=file.files&&file.files[0]; if(!f)return;
- if(!f.type.startsWith('image/')){alert('이미지 파일을 선택해 주세요.');return;}
- const reader=new FileReader();
- reader.onload=()=>{imageData=reader.result;photo.src=imageData;photo.style.display='block';placeholder.style.display='none';analyze.disabled=false;result.style.display='none';};
- reader.readAsDataURL(f);
-});
-analyze.addEventListener('click',()=>{
- if(!imageData)return;
- // 사진의 색상·밝기에서 만든 간단한 숫자로 재미용 유형을 고릅니다. 얼굴이나 성격을 판별하지 않습니다.
- const canvas=document.createElement('canvas'),ctx=canvas.getContext('2d');
- const img=new Image();
- img.onload=()=>{
-  canvas.width=32;canvas.height=32;ctx.drawImage(img,0,0,32,32);
-  const d=ctx.getImageData(0,0,32,32).data;let sum=0,bright=0;
-  for(let i=0;i<d.length;i+=4){sum+=(d[i]*3+d[i+1]*5+d[i+2]*2);bright+=Math.max(d[i],d[i+1],d[i+2]);}
-  const seed=Math.floor((sum+bright)%profiles.length),p=profiles[seed];
-  $('type').textContent=p[0];$('title').textContent=p[1];$('desc').textContent=p[2];
-  $('tags').innerHTML=p.slice(3).map(t=>'<span class="tag">'+t+'</span>').join('');
-  result.style.display='block';result.scrollIntoView({behavior:'smooth',block:'nearest'});
- };
- img.src=imageData;
-});
-$('again').addEventListener('click',()=>{file.value='';imageData='';photo.removeAttribute('src');photo.style.display='none';placeholder.style.display='block';analyze.disabled=true;result.style.display='none';window.scrollTo({top:0,behavior:'smooth'});});
-$('print').addEventListener('click',()=>window.print());
+
+const LEVELS = {
+  easy:{name:'새싹 🌱',count:5},
+  normal:{name:'나무 🌳',count:5},
+  hard:{name:'숲속 🦉',count:5}
+};
+
+let currentLevel = 'easy';
+let questions = [];
+let index = 0;
+let score = 0;
+let wrongCount = 0;
+let answered = false;
+let soundOn = true;
+
+function playSound(type) {
+  if (!soundOn) return;
+  try {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    const ctx = new AudioContext();
+    const oscillator = ctx.createOscillator();
+    const gain = ctx.createGain();
+    oscillator.connect(gain);
+    gain.connect(ctx.destination);
+    const notes = type === 'success' ? [523,659,784] :
+                  type === 'error' ? [220,180] : [440,660];
+    let time = ctx.currentTime;
+    notes.forEach((note,i)=>{
+      oscillator.frequency.setValueAtTime(note,time+i*0.13);
+    });
+    gain.gain.setValueAtTime(0.08,ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.5);
+    oscillator.start();
+    oscillator.stop(ctx.currentTime+0.5);
+  } catch(e) {}
+}
+
+function show(id) {
+  ['home','game','result'].forEach(x=>
+    document.getElementById(x).classList.toggle('hidden',x!==id)
+  );
+}
+
+function startGame(level) {
+  currentLevel = level;
+  questions = QUESTION_BANK
+    .filter(q=>q.level===level)
+    .sort(()=>Math.random()-0.5)
+    .slice(0,LEVELS[level].count);
+  index = 0;
+  score = 0;
+  show('game');
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = questions[index];
+  wrongCount = 0;
+  answered = false;
+  document.getElementById('levelLabel').textContent = LEVELS[currentLevel].name;
+  document.getElementById('roundLabel').textContent =
+    `${index+1} / ${questions.length}`;
+  document.getElementById('scoreLabel').textContent = `점수 ${score}점`;
+  document.getElementById('progressBar').style.width =
+    `${index/questions.length*100}%`;
+  document.getElementById('wordA').textContent = q.a;
+  document.getElementById('wordB').textContent = q.b;
+  document.getElementById('answer').value = '';
+  document.getElementById('answer').disabled = false;
+  document.getElementById('feedback').classList.add('hidden');
+  document.getElementById('checkBtn').classList.remove('hidden');
+  document.getElementById('nextBtn').classList.add('hidden');
+  document.getElementById('answer').focus();
+}
+
+function checkAnswer() {
+  if (answered) return;
+  const q = questions[index];
+  const answer = document.getElementById('answer').value.trim();
+  const feedback = document.getElementById('feedback');
+
+  if (!answer) {
+    feedback.textContent = '먼저 문장을 적어 주세요! 😊';
+    feedback.classList.remove('hidden');
+    return;
+  }
+
+  const hasA = answer.includes(q.a);
+  const hasB = answer.includes(q.b);
+
+  feedback.classList.remove('hidden');
+
+  if (hasA && hasB) {
+    answered = true;
+    score += wrongCount===0 ? 20 : 10;
+    feedback.innerHTML =
+      '🎉 멋져요! 두 단어가 모두 들어갔어요!<br>' +
+      (wrongCount===0 ? '첫 도전에 성공했어요! +20점' : '다시 도전해서 성공했어요! +10점');
+    playSound('success');
+    finishQuestion();
+  } else {
+    wrongCount++;
+    playSound('error');
+    if (wrongCount===1) {
+      let missing = [];
+      if (!hasA) missing.push(q.a);
+      if (!hasB) missing.push(q.b);
+      feedback.innerHTML =
+        `아쉬워요! <b>${missing.join(', ')}</b> 단어도 넣어 보세요.<br>`+
+        '한 번 더 도전해 보세요! 💪';
+    } else {
+      answered = true;
+      feedback.innerHTML =
+        `이번 문제의 예시 문장을 확인해 보세요.<br><b>${q.example}</b><br>`+
+        '다음 문제에서는 꼭 성공해 봐요!';
+      finishQuestion();
+    }
+  }
+}
+
+function finishQuestion() {
+  document.getElementById('answer').disabled = true;
+  document.getElementById('checkBtn').classList.add('hidden');
+  document.getElementById('nextBtn').classList.remove('hidden');
+  document.getElementById('scoreLabel').textContent = `점수 ${score}점`;
+}
+
+function nextQuestion() {
+  index++;
+  if (index >= questions.length) {
+    showResult();
+  } else {
+    renderQuestion();
+  }
+}
+
+function showResult() {
+  show('result');
+  const maxScore = questions.length*20;
+  document.getElementById('finalScore').textContent = `${score}점`;
+  document.getElementById('resultDetail').textContent =
+    `총 ${questions.length}문제 중 도전 완료! (최고 ${maxScore}점)`;
+
+  let message = score>=maxScore*0.8 ? '정말 대단해요! 문장왕에 가까워졌어요! 👑' :
+                score>=maxScore*0.5 ? '잘했어요! 멋진 문장을 만들었어요! 🌟' :
+                '끝까지 도전한 모습이 멋져요! 다시 도전해 봐요! 💚';
+  document.getElementById('resultMessage').textContent = message;
+
+  try {
+    const old = JSON.parse(localStorage.getItem('sentenceKingHistory')||'[]');
+    old.push({level:currentLevel,score,date:new Date().toLocaleDateString('ko-KR')});
+    localStorage.setItem('sentenceKingHistory',JSON.stringify(old.slice(-20)));
+  } catch(e) {}
+  playSound('success');
+}
+
+function goHome() {
+  show('home');
+  updateHistory();
+}
+
+function updateHistory() {
+  try {
+    const history = JSON.parse(localStorage.getItem('sentenceKingHistory')||'[]');
+    const best = history.length ? Math.max(...history.map(x=>x.score)) : 0;
+    document.getElementById('history').textContent =
+      history.length ? `🏅 도전 기록 ${history.length}회 · 최고 점수 ${best}점` :
+      '아직 도전 기록이 없어요. 첫 번째 문장왕에 도전해 보세요!';
+  } catch(e) {}
+}
+
+updateHistory();
 </script>
 </body>
 </html>
